@@ -2,29 +2,26 @@ package testdb;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Hello world!
  */
 public class App {
     public static Connection con;
-    public static void main(String[] args) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Test", "root", "1234");
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from Invoices");
-            while (rs.next())
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2));
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        java.util.Date date2 = new java.util.Date();
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        verbindungAufbauen();
         InvoiceDao invoiceDaoSQL = new SQLInvoiceDaoIImpl();
-        insertInvoice(date,"bestellung 231",324, (byte) 1);
-        invoiceDaoSQL.updateInvoiceSQL(1,date,"bestellung 1 neu",192, (byte) 1);
-        deleteInvoice(9,connectDatabase());
+        invoiceDaoSQL.showInvoicesSQL();
+        invoiceDaoSQL.insertInvoiceSQL(date,"bestellung 24",424, (byte) 1);
+        invoiceDaoSQL.updateInvoiceSQL(20,date,"bestellung 20 neu",122, (byte) 1);
+        invoiceDaoSQL.deleteInvoiceSQL(11);
+        System.out.println("\n");
+        invoiceDaoSQL.showInvoicesSQL();
+        System.out.println("\n");
+        con.close();
+
 
 
 
@@ -34,7 +31,7 @@ public class App {
 
 
         //ArrayList Implementation
-
+        java.util.Date date2 = new  java.util.Date();
         InvoiceDao invoiceDao = new InvoiceDaoArrayListImpl();
         ArrayList<Invoice> liste = invoiceDao.showAllInvoices();
         for (Invoice i : liste) {
@@ -57,6 +54,10 @@ public class App {
         }
 
 
+    }
+    public static void verbindungAufbauen() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/jdbctest", "root", "");
     }
 
 }
