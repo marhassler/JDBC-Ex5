@@ -1,6 +1,8 @@
 package testdb;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class InvoiceDaoArrayListImpl implements  InvoiceDao{
@@ -45,4 +47,26 @@ public class InvoiceDaoArrayListImpl implements  InvoiceDao{
     {
         this.invoices.set(index,i);
     }
+
+    @Override
+    public void updateInvoiceSQL(int id, Date date, String description, int value, Byte paid) throws SQLException {
+
+    }
+
+    @Override
+    public void insertInvoiceSQL(Date date, String description, int value, Byte paid) throws SQLException {
+
+    }
+
+    @Override
+    public void deleteInvoiceSQL(int id) throws SQLException {
+
+    }
+
+    @Override
+    public void showInvoicesSQL() {
+
+    }
+
+
 }
